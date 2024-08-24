@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/",
+                "${workspaceFolder}/src/",
+                "${env:USERLIBS}/wxWidget/include/wx/",
+                "${env:USERLIBS}/wxWidget/include/msvc/",
+                "${env:USERLIBS}/wxWidget/include/",
+                "${env:USERLIBS}/wxWidget/lib/vc_x64_lib/",
+                "${env:USERLIBS}/onnxruntime"
+            ],
+            "defines": [
+                "__WXMSW__",
+                "WXUSINGDLL",
+                "_UNICODE",
+                "WX_PRECOMP"
+            ],
+            "compilerPath": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}

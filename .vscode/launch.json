@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations":[
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/wx-test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd":"${workspaceFolder}/build",
+            "environment": [{"name": "Config", "value": "Debug"}],
+            "externalConsole": true,
+            "preLaunchTask": "build"
+            
+        },
+        {
+            "name": "Build and Debug wxApp",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/wx-test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build",
+            "environment": [],
+            "externalConsole": false,
+            "preLaunchTask": "configure and build"
+        }
+    ]
+}
