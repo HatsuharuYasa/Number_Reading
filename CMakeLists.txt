@@ -6,7 +6,7 @@ set(PROJECT_NAME "NumReadingProject")
 set(SOURCE_FILES src/main.cpp src/gridcanvas.cpp src/inference.cpp)
 
 #Add the executable
-add_executable(${PROJECT_NAME} WIN32 ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 #WXWIDGET LIBRARY CONFIGURATION-------
 #Find wxWidgets, modify the "wxWidgets_ROOT_DIR" to your wxwidget installation location

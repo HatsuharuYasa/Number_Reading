@@ -6,7 +6,7 @@
             "command": "cmake",
             "args": [
                 "--build",
-                "${workspaceFolder}/build",
+                "build",
                 "--config",
                 "Debug"
             ],
@@ -20,11 +20,11 @@
             "command": "cmake",
             "args":[
                 "-G",
-                "\"Visual Studio 17 2022\"",
+                "Visual Studio 17 2022",
                 "-S",
-                "${workspaceFolder}",
+                ".",
                 "-B",
-                "${workspaceFolder}/build"
+                "build"
             ],
             "group": {
                 "kind": "build",
@@ -32,12 +32,16 @@
             }
         },
         {
-            "label": "configure and build debug",
-            "dependsOn": ["cmake configure", "build debug"],
+            "label": "cmake configure and build debug",
+            "dependsOn": [
+                "cmake configure", 
+                "build debug"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": false
-            }
+            },
+            "dependsOrder": "sequence"
         }
     ]
 }

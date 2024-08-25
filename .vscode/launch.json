@@ -10,21 +10,21 @@
             "stopAtEntry": false,
             "cwd":"${workspaceFolder}/build",
             "environment": [{"name": "Config", "value": "Debug"}],
-            "externalConsole": true,
+            "externalConsole": false,
             "preLaunchTask": "build debug"
             
         },
         {
-            "name": "Build and Debug wxApp",
+            "name": "Cmake Build and (gdb) Launch Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/Debug/wx-test.exe",
+            "program": "${workspaceFolder}/build/Debug/NumReadingProject.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build",
             "environment": [],
             "externalConsole": false,
-            "preLaunchTask": "configure and build debug"
+            "preLaunchTask": "cmake configure and build debug"
         }
     ]
 }
