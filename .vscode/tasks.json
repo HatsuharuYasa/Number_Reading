@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks":[
         {
-            "label": "build",
+            "label": "build debug",
             "command": "cmake",
             "args": [
                 "--build",
@@ -19,6 +19,8 @@
             "label": "cmake configure",
             "command": "cmake",
             "args":[
+                "-G",
+                "\"Visual Studio 17 2022\"",
                 "-S",
                 "${workspaceFolder}",
                 "-B",
@@ -30,8 +32,8 @@
             }
         },
         {
-            "label": "configure and build",
-            "dependsOn": ["cmake configure", "build"],
+            "label": "configure and build debug",
+            "dependsOn": ["cmake configure", "build debug"],
             "group": {
                 "kind": "build",
                 "isDefault": false
