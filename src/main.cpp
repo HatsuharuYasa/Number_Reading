@@ -38,7 +38,7 @@ private:
 };
 
 bool MyApp::OnInit(){
-    MyFrame *frame = new MyFrame("Number reading", wxDefaultPosition, wxSize(600, 400));
+    MyFrame *frame = new MyFrame("Read the Number App", wxDefaultPosition, wxSize(613, 461));
     frame->Show(true);
     return true;
 };
@@ -79,7 +79,7 @@ void MyFrame::ReadNumber(wxCommandEvent &e){
 }
 
 MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size) 
-: wxFrame(nullptr, wxID_ANY, title, pos, size){
+: wxFrame(nullptr, wxID_ANY, title, pos, size, wxCAPTION | wxCLOSE_BOX | wxSYSTEM_MENU | wxMINIMIZE_BOX){
     logger = new wxLogWindow(this, "WxLog", true, false);
     wxLog::SetActiveTarget(logger);
 
