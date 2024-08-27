@@ -19,7 +19,7 @@ const std::pair<int, int> &grids)
     }
 
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
-    this->SetBackgroundColour(*wxWHITE);
+    this->SetBackgroundColour(parent->GetBackgroundColour());
 
     this->Bind(wxEVT_PAINT, &GridCanvas::OnPaint, this);
     this->Bind(wxEVT_LEFT_DOWN, &GridCanvas::OnMouseDown, this);
