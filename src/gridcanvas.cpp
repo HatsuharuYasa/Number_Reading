@@ -13,9 +13,9 @@ const std::pair<int, int> &grids)
     int w = size.GetWidth()/gridSize.first, h = size.GetHeight()/gridSize.second;
     pixelSize = (w < h) ? w : h;
 
-    gridArray = (int**)new int*[gridSize.first];
+    gridArray = (float**)new int*[gridSize.first];
     for(int i = 0; i < gridSize.first; i++){
-        gridArray[i] = (int*)new int[gridSize.second]();
+        gridArray[i] = (float*)new int[gridSize.second]();
     }
 
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
@@ -88,7 +88,7 @@ std::pair<int, int> GridCanvas::GetSize() const{
     return gridSize;
 }
 
-int** GridCanvas::GetCanvas() const{
+float** GridCanvas::GetCanvas() const{
     return gridArray;
 }
 

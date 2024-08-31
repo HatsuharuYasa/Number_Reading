@@ -9,7 +9,7 @@ public:
             const wxSize &size = wxDefaultSize, 
             const std::pair<int, int> &grids = std::make_pair(0, 0));
     void ClearCanvas();
-    int** GetCanvas() const;
+    float** GetCanvas() const;
     std::pair<int, int> GetSize() const;
     ~GridCanvas(){
         for(int i = 0; i < gridSize.first; i++){
@@ -25,7 +25,7 @@ private:
     void OnMouseLeave(wxMouseEvent &);
     
     std::pair<int, int> gridSize;
-    int **gridArray;
+    float **gridArray;
 
     int pixelSize;
     bool isDrawing = false;

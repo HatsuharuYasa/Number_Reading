@@ -5,7 +5,7 @@
 class ModelInference{
 public:
     ModelInference();
-    int RunInference(int **, const int&, const int&);
+    int RunInference(float **, const int&, const int&);
     void LoadModel(const std::string&);
     ~ModelInference(){
     }

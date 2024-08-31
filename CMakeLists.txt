@@ -3,7 +3,7 @@ project(NumReadingProject)
 set(PROJECT_NAME "NumReadingProject")
 
 #Define source file
-set(SOURCE_FILES src/main.cpp src/gridcanvas.cpp src/inference.cpp)
+set(SOURCE_FILES src/main.cpp src/canvas.cpp src/gridcanvas.cpp src/canvashub.cpp src/inference.cpp)
 
 #Add the executable
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

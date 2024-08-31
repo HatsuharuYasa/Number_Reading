@@ -1,4 +1,4 @@
-#include "gridcanvas.h"
+#include "canvashub.h"
 #include "penpane.h"
 #include "inference.h"
 #include "canvaspane.h"
@@ -20,7 +20,7 @@ public:
     MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
     ~MyFrame(){
         wxLog::SetActiveTarget(nullptr);
-        delete logger;
+        delete logger, canvashub;
     }
 private:
     void ClearCanvas(wxCommandEvent &);
@@ -33,7 +33,7 @@ private:
     void SelectCanvasPanes(CanvasPane *pane);
 
     wxLog *logger;
-    GridCanvas *gridcanvas;
+    CanvasHub *canvashub;
 
     std::vector<PenPane*> penPanes{};
     std::vector<CanvasPane*> canvasPanes{};
@@ -45,7 +45,7 @@ private:
 };
 
 bool MyApp::OnInit(){
-    MyFrame *frame = new MyFrame("Read the Number App", wxDefaultPosition, wxSize(613, 461));
+    MyFrame *frame = new MyFrame("Read the Number App", wxDefaultPosition, wxSize(640, 480));
     frame->Show(true);
     return true;
 };
@@ -98,6 +98,7 @@ void MyFrame::SelectCanvasPanes(CanvasPane *pane){//To select the canvas type
         canvasPanes[1]->selected = false;
         canvasPanes[0]->Refresh();
         canvasPanes[1]->Refresh();
+        canvashub->SwitchToGrid();
         GRIDCANVASSELECTED = true;
     }
     else{
@@ -105,17 +106,18 @@ void MyFrame::SelectCanvasPanes(CanvasPane *pane){//To select the canvas type
         canvasPanes[1]->selected = true;
         canvasPanes[0]->Refresh();
         canvasPanes[1]->Refresh();
+        canvashub->SwitchToVector();
         GRIDCANVASSELECTED = false;
     }
 }
 
 void MyFrame::ClearCanvas(wxCommandEvent &e){//To clear the canvas
-    gridcanvas->ClearCanvas();
+    canvashub->ClearCanvas();
 }
 
 void MyFrame::ReadNumber(wxCommandEvent &e, wxStaticText *text_display){
-    std::pair<int, int> gs = gridcanvas->GetSize();
-    int pred = model.RunInference(gridcanvas->GetCanvas(), gs.first, gs.second);
+    std::pair<int, int> gs = canvashub->GetSize();
+    int pred = model.RunInference(canvashub->GetCanvas(), gs.first, gs.second);
     wxLogMessage(L"That is number %d", pred);
     text_display->SetLabel(wxString::Format("%d", pred));
 }
@@ -130,13 +132,7 @@ MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
                             wxDefaultPosition, wxDefaultSize);
     control_panel->SetBackgroundColour(*wxWHITE);
 
-    wxPanel *canvas_panel = new wxPanel(this, wxID_ANY, 
-                            wxDefaultPosition, wxDefaultSize);
-    canvas_panel->SetBackgroundColour(wxColor(211, 211, 211));
-    
-    gridcanvas = new GridCanvas(canvas_panel, wxID_ANY, 
-                            wxDefaultPosition, wxSize(400, 400),
-                            std::make_pair(28, 28));
+    canvashub = new CanvasHub(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, std::make_pair(28, 28));
 
     //Sizer initialization
     auto sizer_main = new wxBoxSizer(wxHORIZONTAL);
@@ -157,6 +153,7 @@ MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
     font.SetWeight(wxFONTWEIGHT_BOLD);
     text_numberread_pre->SetFont(font);
     text_numberread->SetFont(font);
+    auto text_canvastype = new wxStaticText(control_panel, wxID_ANY, "Canvas Type");
 
     auto button_clear = new wxButton(control_panel, ID_BUTTON_CLEAR, "Clear", wxDefaultPosition, wxSize(120, 40));
     auto button_read = new wxButton(control_panel, ID_BUTTON_READ, "Read number", wxDefaultPosition, wxSize(120, 40));
@@ -164,6 +161,7 @@ MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
     //Sizer setting and owner management
     //sizer_control_panel->Add(text_brushsize, 0, wxALIGN_CENTER | wxALL, FromDIP(3));
     //sizer_control_panel->Add(sizer_pen_panel, 0, wxALIGN_CENTER | wxBOTTOM, FromDIP(50));
+    sizer_control_panel->Add(text_canvastype, 0, wxALIGN_CENTER | wxALL, FromDIP(5));
     sizer_control_panel->Add(sizer_canvas_panel, 0, wxALIGN_CENTER);
     sizer_control_panel->AddSpacer(FromDIP(40));
     sizer_control_panel->Add(button_clear, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, FromDIP(10));
@@ -174,16 +172,14 @@ MyFrame::MyFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
     sizer_control_panel->Add(text_numberread, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, FromDIP(10));
     sizer_control_panel->AddSpacer(FromDIP(40));
     control_panel->SetSizerAndFit(sizer_control_panel);
-
-    sizer_canvas->Add(gridcanvas, 1, wxALIGN_CENTER | wxALL | wxSHAPED, FromDIP(10));
-    canvas_panel->SetSizer(sizer_canvas);
     
-    sizer_main->Add(canvas_panel, 1, wxEXPAND | wxALL, FromDIP(1));
+    sizer_main->Add(canvashub, 1, wxEXPAND | wxALL, FromDIP(1));
     sizer_main->Add(control_panel, 0, wxEXPAND | wxALL, FromDIP(1));
     this->SetSizer(sizer_main);
 
     //App initialization for configuration
     //SelectPenPanes(penPanes[0]);
+    SelectCanvasPanes(canvasPanes[0]);
 
     button_clear->Bind(wxEVT_BUTTON, &MyFrame::ClearCanvas, this);
     button_read->Bind(wxEVT_BUTTON, [this, text_numberread](wxCommandEvent &e){

@@ -46,7 +46,7 @@ void ModelInference::LoadModel(const std::string& path){
     model_path = std::wstring(path.begin(), path.end()).c_str();
 }
 
-int ModelInference::RunInference(int** arr, const int& width, const int& height){
+int ModelInference::RunInference(float** arr, const int& width, const int& height){
     //Define the data shape
     const std::array<int64_t, 4> input_shape = {1, numChannels, height, width};
     const std::array<int64_t, 2> output_shape = {1, numClasses};
