@@ -10,15 +10,8 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 #WXWIDGET LIBRARY CONFIGURATION-------
 #Find wxWidgets, modify the "wxWidgets_ROOT_DIR" to your wxwidget installation location
-set(wxWidgets_ROOT_DIR $ENV{USERLIBS}/wxWidget)
-set(wxWidgets_LIB_DIR ${wxWidgets_ROOT_DIR}/lib/vc_x64_lib)
-set(wxWidgets_INCLUDE_DIR ${wxWidgets_ROOT_DIR}/include)
-
-set(wxWidgets_CONFIGURATION mswu)
-
-#Add the wxWidgets include directory
-include_directories(${wxWidgets_INCLUDE_DIR})
-
+set(wxWidgets_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/wxWidget)
+set(wxWidgets_DLL_DIR ${wxWidgets_ROOT_DIR}/lib/vc_x64_dll)
 find_package(wxWidgets REQUIRED COMPONENTS core base)
 
 #Include wxWidgets use file
@@ -29,7 +22,7 @@ target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
 
 #ONNXRUNTIME LIBRARY CONFIGURATION--------------
 #Set the Onnxruntime directory, modify the "ONNXRUNTIME_ROOTDIR" to your actual onnxruntime installation location
-set(ONNXRUNTIME_ROOT $ENV{USERLIBS}/onnxruntime)
+set(ONNXRUNTIME_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/external/onnxruntime)
 set(ONNXRUNTIME_INCLUDE_DIR ${ONNXRUNTIME_ROOT}/include)
 set(ONNXRUNTIME_LIB_DIR ${ONNXRUNTIME_ROOT}/build/Windows/RelWithDebInfo/RelWithDebInfo)
 set(ONNXRUNTIME_LIBRARY ${ONNX_RUNTIME_LIB_DIR}/onnxruntime.lib)
@@ -49,6 +42,12 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
 
 #POST BUILD COMMAND---------
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${wxWidgets_DLL_DIR}/wxbase325ud_vc_x64_custom.dll"
+        "${wxWidgets_DLL_DIR}/wxmsw325ud_core_vc_x64_custom.dll"
+        "${CMAKE_BINARY_DIR}/DEBUG/"
+    COMMENT "Copying necessary dll file for wxWidgets"
+
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ONNXRUNTIME_LIB_DIR}/onnxruntime.dll"
         "${CMAKE_BINARY_DIR}/DEBUG/onnxruntime.dll"

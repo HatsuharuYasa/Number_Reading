@@ -12,7 +12,7 @@ CanvasHub::CanvasHub(wxWindow *parent, wxWindowID id, const wxPoint &pos, const 
     mainpanel->SetBackgroundColour(this->GetBackgroundColour());
 
     this->gridcanvas = new GridCanvas(mainpanel, wxID_ANY, wxDefaultPosition, this->mainpanel->GetSize(), gridSize);
-    this->vectorcanvas = new Canvas(mainpanel, wxID_ANY, wxDefaultPosition, this->mainpanel->GetSize());
+    this->vectorcanvas = new Canvas(mainpanel, wxID_ANY, wxDefaultPosition, this->mainpanel->GetSize(), gridSize);
 
     mainsizer = new wxBoxSizer(wxVERTICAL);
     subsizer = new wxBoxSizer(wxVERTICAL);
@@ -74,6 +74,9 @@ void CanvasHub::ClearCanvas(){
 float** CanvasHub::GetCanvas() const{
     if(GRIDCANVASSELECTED){
         return gridcanvas->GetCanvas();
+    }
+    else{
+        return vectorcanvas->GetCanvas();
     }
 }
 

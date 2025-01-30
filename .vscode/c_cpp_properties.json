@@ -3,13 +3,12 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/",
-                "${workspaceFolder}/src/",
-                "${env:USERLIBS}/wxWidget/include/wx/",
-                "${env:USERLIBS}/wxWidget/include/msvc/",
-                "${env:USERLIBS}/wxWidget/include/",
-                "${env:USERLIBS}/wxWidget/lib/vc_x64_lib/",
-                "${env:USERLIBS}/onnxruntime"
+                "${workspaceFolder}/src", // Your source files
+                "${workspaceFolder}/external/onnxruntime/include", // ONNX Runtime includes
+                "${workspaceFolder}/external/wxWidget/include", // wxWidget general includes
+                "${workspaceFolder}/external/wxWidget/include/wx", // wxWidget core includes
+                "${workspaceFolder}/external/wxWidget/include/msvc", // wxWidget MSVC-specific includes
+                "${workspaceFolder}/external/wxWidget/lib/vc_x64_dll" // wxWidget library path
             ],
             "defines": [
                 "__WXMSW__",

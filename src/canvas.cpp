@@ -2,7 +2,8 @@
 #include <wx/graphics.h>
 #include <wx/dcbuffer.h>
 
-Canvas::Canvas(wxWindow *parent, wxWindowID id, const wxPoint &pos, const wxSize &size) : wxWindow(parent, id, pos, size){
+Canvas::Canvas(wxWindow *parent, wxWindowID id, const wxPoint &pos, const wxSize &size, const std::pair<int, int> &grids) 
+    : wxWindow(parent, id, pos, size), gridSize(grids){
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
     this->SetBackgroundColour(*wxBLACK);
 
@@ -29,7 +30,7 @@ void Canvas::OnPaint(wxPaintEvent &evt){
     if(gc){
         for(const auto &pointsVector : squiggles){
             if(pointsVector.size() > 1){
-                gc->SetPen(wxPen(*wxWHITE, this->FromDIP(8)));
+                gc->SetPen(wxPen(*wxWHITE, this->FromDIP(15)));
                 gc->StrokeLines(pointsVector.size(), pointsVector.data());
             }
         }
@@ -59,4 +60,51 @@ void Canvas::OnMouseUp(wxMouseEvent &e){
 
 void Canvas::OnMouseLeave(wxMouseEvent &e){
     isDrawing = false;
+}
+
+float** Canvas::GetCanvas() const{
+    //Acquire the panel size
+    wxSize panelSize = GetSize();
+
+    //Create the bitmap with the same panel size
+    wxBitmap bitmap(panelSize.GetWidth(), panelSize.GetHeight());
+
+    //Create the MemoryDC
+    wxMemoryDC memdc(bitmap);
+    memdc.SetBackground(*wxBLACK_BRUSH);
+    memdc.Clear();
+    wxGraphicsContext *gc = wxGraphicsContext::Create(memdc);
+
+    if(gc){
+        for(const auto &pointsvector : squiggles){
+            if(pointsvector.size() > 1){
+                gc->SetPen(wxPen(*wxWHITE, this->FromDIP(15)));
+                gc->StrokeLines(pointsvector.size(), pointsvector.data());
+            }
+        }
+        delete gc;
+    }
+
+    memdc.SelectObject(wxNullBitmap);
+
+    wxImage image = bitmap.ConvertToImage();
+    wxImage resizedimage = image.Rescale(gridSize.first, gridSize.second, wxIMAGE_QUALITY_NORMAL);
+
+    float **pd = (float**)new float*[gridSize.first];
+    for(int i = 0; i < gridSize.first; i++){
+        pd[i] = (float*)new float[gridSize.second]();
+    }
+
+    for(int i = 0; i < gridSize.first; i++){
+        for(int j = 0; j < gridSize.second; j++){
+            //Acquire the rgb value
+            unsigned char r = resizedimage.GetRed(i, j);
+            unsigned char g = resizedimage.GetGreen(i, j);
+            unsigned char b = resizedimage.GetBlue(i, j);
+
+            //Store the converted grayscale value to the pixeldata
+            pd[i][j] = 0.299f * r + 0.587f * g + 0.114f * b;
+        }
+    }
+    return pd;
 }
