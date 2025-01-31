@@ -7,16 +7,22 @@ This is repository containing the development of simple GUI App that reads the n
 ## 1. Building the App
 **Prerequisites**
 
-[Compiler]
+>[Compiler]
+
 -> Compiler: Cl.exe
+
 -> Version: MSVC 14.x (from Visual Studio 2022)
+
 -> Platform: Windows 64-bit
 
-[Dependecies]
+>[Dependecies]
+
 -> wxWidget 3.2.5
+
 -> onnxruntime 1.16.1
 
-[Build System]
+>[Build System]
+
 -> CMake 3.29.5-msvc4
 
 **Steps**
