@@ -1,0 +1,3 @@
+[submodule "external/onnxruntime_module"]
+	path = external/onnxruntime_module
+	url = https://github.com/microsoft/onnxruntime.git

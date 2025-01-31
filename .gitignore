@@ -1,4 +1,6 @@
 build/*
 model/data
-wxWidget
+
 external/*
+!external/onnxruntime_module
+!external/wxWidget_module
