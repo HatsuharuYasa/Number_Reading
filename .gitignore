@@ -1,6 +1,5 @@
 build/*
 model/data
 
-external/*
-!external/onnxruntime_module
-!external/wxWidget_module
+external/onnxruntime
+external/wxWidget
