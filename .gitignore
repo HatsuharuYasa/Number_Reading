@@ -1,5 +1,4 @@
 build/*
 model/data
-*.onnx 
 wxWidget
 external/*
