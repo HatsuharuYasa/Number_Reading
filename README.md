@@ -39,6 +39,7 @@ However if the user wish to retrain the model here are the following steps, that
 **Prerequisites**
 
 [Dependencies]
+
 torch==2.4.0+cu118
 torchaudio==2.4.0+cu118
 torchvision==0.19.0+cu118
