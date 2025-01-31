@@ -62,6 +62,8 @@ MNIST dataset downloaded via torchvision.datasets (already in the model.py scrip
 
 Downloading the dataset already been taken care by the script, the only thing needs to do when training the model is to run the model.py script as follow
 
+Go to model/ directory and run the following command
+
 ```sh
 python model.py --batch-size <batch_size> \  # Set batch size (default: 32)
                 --lr <learning_rate> \       # Set learning rate (default: 0.001)
@@ -69,6 +71,8 @@ python model.py --batch-size <batch_size> \  # Set batch size (default: 32)
                 --verbose  # (Optional) Enables detailed logs
                 --skip-test  # (Optional) Skips validation after each epoch
 ```
+
+The trained model is saved within the same directory as the script
 
 By default, batch size is 32, learning rate is 0.001, and epochs is 10.
 Optional argument like verbose will enable the program to provide more detailed log or information and skip-test will skip the validation process in each epochs.
