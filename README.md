@@ -44,15 +44,17 @@ However if the user wish to retrain the model here are the following steps, that
 
 **Prerequisites**
 
-[Dependencies]
+>[Dependencies]
 
 torch==2.4.0+cu118
+
 torchaudio==2.4.0+cu118
+
 torchvision==0.19.0+cu118
 
 // Alternatively download pytorch with cuda 11.8 from the website
 
-[Dataset]
+>[Dataset]
 
 MNIST dataset downloaded via torchvision.datasets (already in the model.py script)
 
