@@ -1,3 +1,9 @@
 [submodule "external/onnxruntime_module"]
 	path = external/onnxruntime_module
 	url = https://github.com/microsoft/onnxruntime.git
+    update = none
+
+[submodule "external/wxWidget_module"]
+    path = external/wxWidget_module
+    url = https://github.com/wxWidgets/wxWidgets.git
+    update = none
